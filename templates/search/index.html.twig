@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello SearchController!
+{% endblock %}
+
+{% block body %}
+	<h2 class="text-center mt-5">Où souhaitez-vous trouver un centre de contrôle ?</h1>
+
+
+	<div class="row g-3 justify-content-md-center mt-3">
+		<div class="col-sm-10 col-lg-6">
+			<div class="input-group">
+				<input placeholder="75000/paris..." class="form-control" type="text" name="search-criteria" id="search-criteria" aria-describedby="search-button">
+				<a href="{{path('app_api_search')}}" class="btn btn-primary" id="search-button">Trouver les centres</a>
+			</div>
+		</div>
+		<div class="col-sm-12 col-lg-10 row container justify-content-center mt-5">
+			<div class="col-sm-12 col-md-8 ">
+				<p class="align-middle" id="result-header-text"></p>
+			</div>
+			<div class="col-sm-6 col-md-4 row">
+				<div class="col text-center">
+					<a href="#" class="bi bi-view-list fs-3 align-middle"></a>
+				</div>
+				<div class="col text-center">
+					<a class="bi bi-map ml-5 fs-3 align-middle"></a>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12 row g-3 container justify-content-center" id="result-list-container"></div>
+	</div>
+
+{% endblock %}
+{% block javascripts %}
+	<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<script src="{{asset('assets/searchScript.js')}}"></script>
+{% endblock %}
