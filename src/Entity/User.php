@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -37,6 +39,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $password;
 
     private $passwordCheck;
+
+    /**
+     * @ORM\OneToMany(targetEntity=ShortList::class, mappedBy="userId", orphanRemoval=true)
+     */
+    private $shortLists;
+
+    public function __construct()
+    {
+        $this->shortLists = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -137,5 +149,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection<int, ShortList>
+     */
+    public function getShortLists(): Collection
+    {
+        return $this->shortLists;
+    }
+
+    public function addShortList(ShortList $shortList): self
+    {
+        if (!$this->shortLists->contains($shortList)) {
+            $this->shortLists[] = $shortList;
+            $shortList->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeShortList(ShortList $shortList): self
+    {
+        if ($this->shortLists->removeElement($shortList)) {
+            // set the owning side to null (unless already changed)
+            if ($shortList->getUserId() === $this) {
+                $shortList->setUserId(null);
+            }
+        }
+
+        return $this;
     }
 }

@@ -3,18 +3,36 @@
 namespace App\Controller;
 
 use CenterFetcher;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\User;
+use App\Repository\UserRepository;
+use App\Repository\ShortListRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class SearchController extends AbstractController
 {
     /**
      * @Route("/recherche/api/simple", name="app_api_search")
      */
-    public function search(Request $request): Response
+    public function search(NormalizerInterface $normalizer, Request $request, UserRepository $userRepo, ShortListRepository $shortListRepo, EntityManagerInterface $manager): Response
     {
+        // get user
+        $user = $userRepo->findOneBy([
+            "email" => $this->getUser()->getUserIdentifier()
+        ]);
+
+
+        $shortList = $shortListRepo->findAll();
+        // [
+        //     "userId" => $user->getId()
+        // ]);
+        // get request body
+
+
 
         $options = [];
         if ($content = $request->getContent()) {
@@ -30,7 +48,10 @@ class SearchController extends AbstractController
             return $this->json(json_encode(["message" => "pas de résultat pour cette recherche"]), 404);
         }
 
-        return $this->json($data, 200);
+        return $this->json(json_encode([
+            "data" => $data,
+            "shortlist" => $normalizer->normalize($shortList, null, ["groups" => "shortlist:read"])
+        ]), 200);
     }
 
 
@@ -39,12 +60,6 @@ class SearchController extends AbstractController
      */
     public function index(): Response
     {
-        $fetcher = new CenterFetcher();
-
-        $data = $fetcher->fetchDeptData(78540);
-
-        return $this->render('search/index.html.twig', [
-            "data" => $data
-        ]);
+        return $this->render('search/index.html.twig',);
     }
 }

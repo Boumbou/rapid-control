@@ -16,6 +16,8 @@
 		{% endblock %}
 	</head>
 	<body>
+		<div id="js-user" data-is-authenticated="{{ app.user ? 'true' : 'false' }}"></div>
+
 		<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
 			<div class="container-fluid">
 				<a class="navbar-brand" href="#">Rapid Control</a>

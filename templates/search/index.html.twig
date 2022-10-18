@@ -4,6 +4,7 @@
 {% endblock %}
 
 {% block body %}
+	<div id="save-target" data-target="{{path('app_save_to_shortlist')}}"></div>
 	<h2 class="text-center mt-5">Où souhaitez-vous trouver un centre de contrôle ?</h1>
 
 
@@ -36,4 +37,5 @@
 	<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 	<script src="{{asset('assets/searchScript.js')}}"></script>
+	<script src="{{asset('assets/manageShortList.js')}}"></script>
 {% endblock %}
