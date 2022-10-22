@@ -1,6 +1,6 @@
 
 
-document.addEventListener("DOMContentLoaded", (event) => {
+window.addEventListener("DOMContentLoaded", (event) => {
     //the event occurred.
     const btn = document.getElementById("search-button");
     const url = document.getElementById("search-button").href;
@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
         const resultHeaderText = document.getElementById("result-header-text");
         const jsUser = document.getElementById("js-user");
         const isAuth = jsUser.dataset.isAuthenticated;
+        const noResutBlock = document.getElementById("no-result");
 
 
         listContainer.innerHTML = ""
@@ -28,8 +29,17 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
         if (data.nhits > 0) {
             resultHeaderText.innerText = `${data.nhits} centres trouvés...`;
+            resultHeader.className = resultHeader.className.replace("d-none", "")
+            if (!noResutBlock.className.indexOf("d-none") > 0) {
+                noResutBlock.className = noResutBlock.className + " d-none";
+            }
         } else {
             resultHeaderText.innerText = "Aucun résultat pour votre recherche...";
+            if (!resultHeader.className.indexOf("d-none") > 0) {
+                resultHeader.className = resultHeader.className + "d-none";
+            } else {
+                noResutBlock.className = noResutBlock.className.replace("d-none", "");
+            }
         }
 
 
@@ -48,14 +58,14 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
             const shortlisted = shortlist.some(elt => elt.centerId === element.recordid);
             console.log(shortlist)
-            if (isAuth) {
+            if (isAuth === 'true') {
                 cardTitle.innerHTML = `
                     ${element.fields.cct_denomination} 
                     ${shortlisted ? '<a href="#" class="bi bi-star-fill text-primary add-to-shortlist" data-center-id="' + element.recordid + '"></a>' : '<a href="#" class="bi bi-star text-primary add-to-shortlist" data-center-id="' + element.recordid + '"></a>'}`;
             } else {
                 cardTitle.innerHTML = `
                     ${element.fields.cct_denomination} 
-                    <i class="bi bi-star text-secondary"></i>`;
+                    <i class="bi bi-star text-dark"></i>`;
             }
             cardText.innerHTML = `
                 <p>
@@ -73,19 +83,18 @@ document.addEventListener("DOMContentLoaded", (event) => {
                 event.preventDefault();
                 const saveUrl = document.getElementById("save-target").dataset.target;
                 const centerId = event.target.dataset.centerId
-                const data = await axios.post(saveUrl, { center: centerId }).then(function (response) {
-                    console.log(response)
-                    return response.data
-                })
 
-                if (String.prototype.indexOf("bi-star ") > 0) {
+                if (event.target.className.indexOf("bi-star ") > 0) {
 
                     event.target.className = event.target.className.replace("bi-star ", "bi-star-fill ")
                 } else {
                     event.target.className = event.target.className.replace("bi-star-fill ", "bi-star ")
                 }
 
-
+                const data = await axios.post(saveUrl, { center: centerId }).then(function (response) {
+                    console.log(response)
+                    return response.data
+                })
             })
         });
         // criteria.value = null

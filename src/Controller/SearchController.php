@@ -21,15 +21,20 @@ class SearchController extends AbstractController
     public function search(NormalizerInterface $normalizer, Request $request, UserRepository $userRepo, ShortListRepository $shortListRepo, EntityManagerInterface $manager): Response
     {
         // get user
-        $user = $userRepo->findOneBy([
-            "email" => $this->getUser()->getUserIdentifier()
-        ]);
+        $isAuth = $this->getUser() != null;
+        if ($isAuth) {
+            $user = $userRepo->findOneBy([
+                "email" => $this->getUser()->getUserIdentifier()
+            ]);
+
+            $shortList = $shortListRepo->findBy([
+                "userId" => $user->getId()
+            ]);
+
+            $normalizedShortlist = $normalizer->normalize($shortList, null, ["groups" => "shortlist:read"]);
+        }
 
 
-        $shortList = $shortListRepo->findAll();
-        // [
-        //     "userId" => $user->getId()
-        // ]);
         // get request body
 
 
@@ -50,7 +55,7 @@ class SearchController extends AbstractController
 
         return $this->json(json_encode([
             "data" => $data,
-            "shortlist" => $normalizer->normalize($shortList, null, ["groups" => "shortlist:read"])
+            "shortlist" => $isAuth ? $normalizedShortlist : []
         ]), 200);
     }
 

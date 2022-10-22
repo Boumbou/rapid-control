@@ -18,9 +18,9 @@
 	<body>
 		<div id="js-user" data-is-authenticated="{{ app.user ? 'true' : 'false' }}"></div>
 
-		<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+		<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
 			<div class="container-fluid">
-				<a class="navbar-brand" href="#">Rapid Control</a>
+				<a class="navbar-brand" href="/">Rapid Control</a>
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
@@ -43,7 +43,7 @@
 					</ul>
 					{% if app.user %}
 						<div class="d-flex justify-content-evenly w-25">
-							<a href="#" class="bi bi-star-fill text-light fs-3"></a>
+							<a href="{{path('app_shortlist')}}" class="bi bi-star-fill text-light fs-3"></a>
 							<a class="btn btn-secondary my-2 my-sm-0" href="{{path('app_logout')}}">Déconnexion</a>
 						</div>
 					{% else %}
@@ -54,12 +54,11 @@
 				</div>
 			</div>
 		</nav>
-		<div class="container"> {% block body %}{% endblock %}
-			</div>
+		{% block body %}{% endblock %}
 
-			{% block javascripts %}
-				{{ encore_entry_script_tags('app') }}
-			{% endblock %}
-		</body>
-	</html>
-</body></html>
+
+		{% block javascripts %}
+			{{ encore_entry_script_tags('app') }}
+		{% endblock %}
+	</body>
+</html></body></html>

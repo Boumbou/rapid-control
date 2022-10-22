@@ -1,20 +1,26 @@
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", (event) => {
 
-    const listContainer = document.getElementById("result-list-container");
-    listContainer.addEventListener("change", () => {
-        const saveButtons = document.getElementsByClassName("add-to-shortlist");
-        s
+    const centerList = [...document.getElementsByClassName("bi-trash")];
+    const jsUser = document.getElementById("js-user");
+    const isAuth = jsUser.dataset.isAuthenticated;
 
-        saveButtons.addEventListener("click", (event) => {
+    centerList.forEach(elt => {
+        elt.addEventListener("click", async (event) => {
             event.preventDefault();
-            const isAuth = document.getElementById("js-user").dataset.isAuthenticated;
-            var user = JSON.parse(userRating.dataset.user);
+            const centerId = elt.dataset.center;
+            const response = await axios.post(elt.href, { id: centerId }).then(function (response) {
+                console.log(response)
+                return JSON.parse(response.status)
+            })
 
-            console.log("clicked")
+            if (response === 200) {
+                console.log("deleted")
+            } else {
+                console.log("not deleted")
+            }
 
         })
-    })
-
+    });
 
 })

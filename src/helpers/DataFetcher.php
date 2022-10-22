@@ -18,6 +18,20 @@ class CenterFetcher implements DataFetcher
         $this->baseUrl = "https://data.economie.gouv.fr/api/records/1.0/search/?dataset=controle_techn";
     }
 
+    public function removeDuplicates($array): array
+    {
+
+        $keyArray = array_map(function ($array) {
+            return $array["fields"]["cct_adresse"];
+        }, $array);
+
+        $uniqueKeys = array_unique($keyArray);
+
+        $result  = array_values(array_intersect_key($array, $uniqueKeys));
+
+        return $result;
+    }
+
     public function fetchDeptData($postalCode): array
     {
         // Request constants
@@ -67,6 +81,48 @@ class CenterFetcher implements DataFetcher
                 'facet' => 'prix_contre_visite_min',
                 'facet' => 'prix_contre_visite_max',
                 'facet' => 'coorgeo',
+            ],
+        ];
+
+        $client = HttpClient::create([
+            'max_redirects' => 3,
+        ]);
+        $response = $client->request(
+            'GET',
+            $this->baseUrl,
+            [
+                'query' => $requestData['query']
+            ]
+        );
+
+        return $response->toArray();
+    }
+
+    public function fetchByIds($idList): array
+    {
+        // Request constants
+        $queryString = "";
+        foreach ($idList as $id) {
+            if ($queryString === "") {
+                $queryString = $queryString . "recordid=" . $id["centerId"];
+            } else {
+                $queryString = $queryString . " OR recordid=" . $id["centerId"];
+            }
+        };
+
+        $requestData = [
+            'debug' => true,
+            'query' => [
+                'rows' => 30,
+                'q' => $queryString,
+                'sort' => 'cct_code_dept',
+                'facet' => 'cct_code_dept',
+                'facet' => 'code_postal',
+                'facet' => 'prix_visite',
+                'facet' => 'prix_contre_visite_min',
+                'facet' => 'prix_contre_visite_max',
+                'facet' => 'coorgeo',
+                'facet' => 'cct_tel',
             ],
         ];
 

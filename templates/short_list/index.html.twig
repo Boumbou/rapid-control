@@ -1,20 +1,74 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ShortListController!{% endblock %}
+{% block title %}Centres enregistrés
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+	<div id="save-target" data-target="{{path('app_save_to_shortlist')}}"></div>
+	{% if shortlistCount == 0 %}
+		<h2 class="text-center mt-5">Vous n'avez pas encore enregistré de centres</h2>
+		<div class="d-none" id="remove-url" href="{{path('app_delete_from_shortlist')}}"></div>
+	{% else %}
+		{% if shortlistCount == 1 %}
+			<h2 class="text-center mt-5">1 centre enregistré</h2>
+		{% else %}
+			<h2 class="text-center mt-5">{{shortlistCount}}
+				centres enregistrés</h2>
+		{% endif %}
+		<div class="row g-3 justify-content-md-center mt-3">
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+			<div class="col-12 container text-center justify-content-center mt-5 d-none" id="no-result">
+				<img src="{{asset("images/empty-folder.png")}}" alt="Pas de résultat" class="mx-auto d-block w-50">
+				<a class="fs-6 fw-lighter text-decoration-none" href="https://www.flaticon.com/free-icons/empty-folder" title="empty folder icons">Empty folder icons created by Ghozi Muhtarom - Flaticon</a>
+			</div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/belakel/Documents/atija/symfony_projects/RapidControl/src/Controller/ShortListController.php'|file_link(0) }}">src/Controller/ShortListController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/belakel/Documents/atija/symfony_projects/RapidControl/templates/short_list/index.html.twig'|file_link(0) }}">templates/short_list/index.html.twig</a></code></li>
-    </ul>
-</div>
+			<div class="col-12 row g-3 container justify-content-center" id="shortlist-container">
+				{% for item in shortlist.records %}
+					<div class="col-sm-12 col-md-8 card border-secondary mb-3">
+						<div class="card-body">
+							<div class="row">
+								<div class="col-11">
+									<h4 class="card-title">{{item.fields.cct_denomination}}</h4>
+								</div>
+								<div class="trash-container col-1 container text-center h-100">
+									<a href="{{path('app_delete_from_shortlist')}}" data-center="{{item.recordid}}" class="bi bi-trash color-danger align-middle fs-5"></a>
+								</div>
+							</div>
+							<p class="card-text ">
+								{{item.fields.cct_adresse}}
+								<br>
+								<i class="bi bi-telephone"></i>
+								:
+								{{item.fields.cct_tel | default("non renseigné")}}
+								<div class="row">
+									<div class="col">
+										<p>Prix visite</p>
+										<h6>{{item.fields.prix_visite}}
+											€</h6>
+									</div>
+									<div class="col">
+										<p>Prix min contre visite</p>
+										<h6>{{item.fields.prix_contre_visite_min}}
+											€</h6>
+									</div>
+									<div class="col">
+										<p>Prix max contre visite</p>
+										<h6>{{item.fields.prix_contre_visite_max}}
+											€</h6>
+									</div>
+								</div>
+							</p>
+						</div>
+					</div>
+				{% endfor %}
+
+			</div>
+		</div>
+	{% endif %}
+
+{% endblock %}
+{% block javascripts %}
+	<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<script src="{{asset('assets/manageShortList.js')}}"></script>
 {% endblock %}

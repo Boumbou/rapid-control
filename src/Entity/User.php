@@ -41,7 +41,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $passwordCheck;
 
     /**
-     * @ORM\OneToMany(targetEntity=ShortList::class, mappedBy="userId", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=ShortList::class, mappedBy="userId", orphanRemoval=true, fetch="EAGER")
      */
     private $shortLists;
 

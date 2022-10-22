@@ -4,12 +4,20 @@
 {% endblock %}
 
 {% block body %}
-	<div class="row">
-		<div class="col-lg-6">
-			<h1>Trouver rapidement un centre de contrôle technique agréé près de chez vous</h1>
+
+	<section class="first-section  pt-0 p-5">
+		<div class="row container justify-content-center pt-5 pb-5">
+			<div class="col-lg-6 ">
+				<h1 class="text-dark">Trouver rapidement un centre de contrôle technique agréé près de chez vous</h1>
+			</div>
+			<div class="col-lg-4">
+
+				<img src="{{asset('images/piston.png')}}" class="img-fluid" alt="">
+			</div>
 		</div>
-		<div class="col-lg-4">
-			<img src="https://via.placeholder.com/200x300" alt="">
+		<div class="container text-center justify-content-center">
+			<a class="btn btn-lg btn-primary" href="{{path('app_search')}}">Commencer !</a>
 		</div>
-	</div>
+	</section>
+
 {% endblock %}
