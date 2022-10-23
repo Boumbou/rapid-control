@@ -72,7 +72,7 @@ class CenterFetcher implements DataFetcher
         $requestData = [
             'debug' => true,
             'query' => [
-                'rows' => 30,
+                'rows' => 100,
                 'q' => 'cct_code_commune=' . $townName,
                 'sort' => 'cct_code_dept',
                 'facet' => 'cct_code_dept',
@@ -113,7 +113,7 @@ class CenterFetcher implements DataFetcher
         $requestData = [
             'debug' => true,
             'query' => [
-                'rows' => 30,
+                'rows' => 100,
                 'q' => $queryString,
                 'sort' => 'cct_code_dept',
                 'facet' => 'cct_code_dept',

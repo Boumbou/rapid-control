@@ -15,9 +15,17 @@ document.addEventListener("DOMContentLoaded", (event) => {
             })
 
             if (response === 200) {
-                console.log("deleted")
+                elt.parentElement.parentElement.parentElement.parentElement.remove()
+                const centerListCount = [...document.getElementsByClassName("bi-trash")].length
+                if (centerListCount > 1) {
+                    document.getElementById("header-text").innerText = (centerList.length - 1) + "centres enregistrés"
+                } else if (centerListCount > 0) {
+                    document.getElementById("header-text").innerText = "1 centre enregistré"
+                } else {
+                    document.getElementById("header-text").innerText = "Vous n'avez pas encore enregistré de centres"
+                }
             } else {
-                console.log("not deleted")
+
             }
 
         })

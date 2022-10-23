@@ -3,12 +3,17 @@
 {% block title %}Hello SearchController!
 {% endblock %}
 
+{% block stylesheets %}
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.2/dist/leaflet.css" integrity="sha256-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14=" crossorigin=""/>
+	<script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js" integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg=" crossorigin=""></script>
+{% endblock %}
+
 {% block body %}
 	<div id="save-target" data-target="{{path('app_save_to_shortlist')}}"></div>
 	<h2 class="text-center mt-5">Où souhaitez-vous trouver un centre de contrôle ?</h1>
 
 
-	<div class="row g-3 justify-content-md-center mt-3">
+	<div class="row g-3 justify-content-center mt-3">
 		<div class="col-sm-12 col-lg-6">
 			<div class="input-group">
 				<input placeholder="75000/paris..." class="form-control" type="text" name="search-criteria" id="search-criteria" aria-describedby="search-button">
@@ -21,10 +26,10 @@
 			</div>
 			<div class="col-sm-6 col-md-4 row">
 				<div class="col text-center">
-					<a href="#" class="bi bi-view-list fs-3 align-middle"></a>
+					<a href="#" id="list-view" class="bi bi-view-list fs-3 align-middle"></a>
 				</div>
 				<div class="col text-center">
-					<a class="bi bi-map ml-5 fs-3 align-middle"></a>
+					<a href="#" id="map-view" class="bi bi-map ml-5 fs-3 align-middle"></a>
 				</div>
 			</div>
 		</div>
@@ -33,7 +38,13 @@
 			<a class="fs-6 fw-lighter text-decoration-none" href="https://www.flaticon.com/free-icons/empty-folder" title="empty folder icons">Empty folder icons created by Ghozi Muhtarom - Flaticon</a>
 		</div>
 
+		<div id="map" class="w-75 d-none" style="height: 400px"></div>
 		<div class="col-12 row g-3 container justify-content-center" id="result-list-container"></div>
+	</div>
+	<div class="fixed-bottom container text-end justify-content-start w-100 p-3">
+		<a href="#save-target" id="scroll-up-btn" class="btn btn-primary">
+			<i class="bi bi-arrow-up"></i>
+		</a>
 	</div>
 
 {% endblock %}
@@ -41,5 +52,4 @@
 	<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 	<script src="{{asset('assets/searchScript.js')}}"></script>
-	<script src="{{asset('assets/manageShortList.js')}}"></script>
 {% endblock %}

@@ -44,7 +44,6 @@ class SearchController extends AbstractController
             $options = json_decode($content, true);
         }
 
-
         $fetcher = new CenterFetcher();
 
         $data = $fetcher->fetchFactory($options["location"]);

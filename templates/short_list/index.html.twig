@@ -6,13 +6,13 @@
 {% block body %}
 	<div id="save-target" data-target="{{path('app_save_to_shortlist')}}"></div>
 	{% if shortlistCount == 0 %}
-		<h2 class="text-center mt-5">Vous n'avez pas encore enregistré de centres</h2>
+		<h2 id="header-text" class="text-center mt-5">Vous n'avez pas encore enregistré de centres</h2>
 		<div class="d-none" id="remove-url" href="{{path('app_delete_from_shortlist')}}"></div>
 	{% else %}
 		{% if shortlistCount == 1 %}
-			<h2 class="text-center mt-5">1 centre enregistré</h2>
+			<h2 id="header-text" class="text-center mt-5">1 centre enregistré</h2>
 		{% else %}
-			<h2 class="text-center mt-5">{{shortlistCount}}
+			<h2 id="header-text" class="text-center mt-5">{{shortlistCount}}
 				centres enregistrés</h2>
 		{% endif %}
 		<div class="row g-3 justify-content-md-center mt-3">
