@@ -1,5 +1,7 @@
 <?php
 
+namespace App\helpers;
+
 use Symfony\Component\HttpClient\HttpClient;
 
 interface DataFetcher
