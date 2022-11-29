@@ -1,6 +1,5 @@
 <?php
 
-use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpClient\HttpClient;
 
 interface DataFetcher

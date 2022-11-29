@@ -41,17 +41,15 @@ window.addEventListener("DOMContentLoaded", (event) => {
         if (data.nhits > 0) {
             resultHeaderText.innerText = `${data.nhits} centres trouvés...`;
             resultHeader.className = resultHeader.className.replace("d-none", "")
-            if (!noResutBlock.className.indexOf("d-none") > 0) {
+            if (noResutBlock.className.indexOf("d-none") < 0) {
                 noResutBlock.className = noResutBlock.className + " d-none";
             }
         } else {
-            resultHeaderText.innerText = "Aucun résultat pour votre recherche...";
+            // resultHeaderText.innerText = "Aucun résultat pour votre recherche...";
             if (!resultHeader.className.indexOf("d-none") > 0) {
                 resultHeader.className = resultHeader.className + "d-none";
-
-            } else {
-                noResutBlock.className = noResutBlock.className.replace("d-none", "");
             }
+            noResutBlock.className = noResutBlock.className.replace("d-none", "");
         }
 
         const mapCoordinates = await axios.get(coordinatesApiUrl).then((response) => { console.log(response); return [response.data[0].centre.coordinates[1], response.data[0].centre.coordinates[0]] })
