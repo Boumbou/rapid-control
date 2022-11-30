@@ -7,7 +7,7 @@ use App\Entity\ShortList;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityRepository;
 use App\Repository\ShortListRepository;
-use CenterFetcher;
+use App\helpers\CenterFetcher;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
