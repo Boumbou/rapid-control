@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use CenterFetcher;
+use App\helpers\CenterFetcher;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Repository\ShortListRepository;
