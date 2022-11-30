@@ -44,13 +44,17 @@
 						</li>
 					</ul>
 					{% if app.user %}
-						<div class="d-flex justify-content-evenly w-25">
-							<a href="{{path('app_shortlist')}}" class="nav-link bi bi-star-fill text-light fs-3"></a>
-							<a class="btn btn-secondary my-2 my-sm-0" href="{{path('app_logout')}}">Déconnexion</a>
+						<div class="navbar-nav d-flex justify-content-evenly align-items-center w-25">
+							<div class="nav-item">
+								<a href="{{path('app_shortlist')}}" class="nav-link bi bi-star-fill text-light fs-3"></a>
+							</div>
+							<div class="nav-item">
+								<a class="btn btn-secondary my-2 my-sm-0 " href="{{path('app_logout')}}">Déconnexion</a>
+							</div>
 						</div>
 					{% else %}
 						<div class="d-flex">
-							<a class="btn btn-primary my-2 my-sm-0" href="{{path('app_login')}}">Connexion</a>
+							<a class="btn btn-primary my-2 my-sm-0 " href="{{path('app_login')}}">Connexion</a>
 						</div>
 					{% endif %}
 				</div>
