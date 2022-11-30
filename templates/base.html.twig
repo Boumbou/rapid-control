@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>
-			{% block title %}Welcome!
+			{% block title %}Rapid Control
 			{% endblock %}
 		</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -44,7 +44,7 @@
 						</li>
 					</ul>
 					{% if app.user %}
-						<div class="navbar-nav d-flex justify-content-evenly align-items-center w-25">
+						<div class="navbar-nav d-flex justify-content-end align-items-center w-80">
 							<div class="nav-item">
 								<a href="{{path('app_shortlist')}}" class="nav-link bi bi-star-fill text-light fs-3"></a>
 							</div>
